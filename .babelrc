@@ -1,0 +1,23 @@
+{
+	"presets": ["@babel/preset-env"],
+	"plugins": [
+	  ["module-resolver", {
+		"root": ["./app"],
+		"alias": {
+		  "app": "./app",
+		  "contexts": "./app/contexts",
+		  "controllers": "./app/controllers",
+		  "helpers": "./app/helpers",
+		  "initializers": "./app/initializers",
+		  "middlewares": "./app/middlewares",
+		  "models": "./app/models",
+		  "modules": "./app/modules",
+		  "serializers": "./app/serializers"
+		}
+	  }],
+	  ["@babel/plugin-transform-runtime", {
+		"regenerator": true
+	  }]
+  ]
+  }
+  
