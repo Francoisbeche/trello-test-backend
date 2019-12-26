@@ -76,7 +76,7 @@ class UserCreateSessionContext {
     } catch (err) {
       throw new ApiBadRequestError(err.message);
     }
-    return user;
+    return session;
   }
 }
 
