@@ -4,7 +4,7 @@ import UserController from 'controllers/users/userController';
 import ListController from 'controllers/lists/listController';
 import TeamController from 'controllers/teams/teamController';
 import SessionController from 'controllers/sessions/sessionController';
-
+import CardController from 'controllers/cards/cardController';
 class Routes {
   constructor() {
     this.router = express.Router();
@@ -44,7 +44,7 @@ class Routes {
         ListController.delete
       )
 
-      this.router
+    this.router
       .route('/list/:teamId')
       .get(
         ApiAuthentication.validJwt,
@@ -64,6 +64,35 @@ class Routes {
         TeamController.getUserTeam
       )
 
+    this.router
+      .route('/card')
+      .post(
+        ApiAuthentication.validJwt,
+        ApiAuthentication.retrieveUser,
+        CardController.create
+      )
+    this.router
+      .route('/card/update/:idCard')
+      .put(
+        ApiAuthentication.validJwt,
+        ApiAuthentication.retrieveUser,
+        CardController.updateCard
+      )
+
+      this.router
+      .route('/card/delete/:idCard')
+      .delete(
+        ApiAuthentication.validJwt,
+        ApiAuthentication.retrieveUser,
+        CardController.delete
+      )
+    this.router
+      .route('/card/:idList')
+      .get(
+        ApiAuthentication.validJwt,
+        ApiAuthentication.retrieveUser,
+        CardController.getListCard
+      )
     this.router.route('/session').post(SessionController.create);
   }
 }
