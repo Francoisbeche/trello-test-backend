@@ -60,7 +60,7 @@ class UserController {
   
   static async me(req, res, next) {
     return res.json({
-      data: [UserSerializer(req.user)],
+      data: UserSerializer(req.user),
       includes: []
     });
   }

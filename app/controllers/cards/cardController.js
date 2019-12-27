@@ -17,8 +17,8 @@ class CardController {
     let givenParams;
 
     if (
-      !req.body.content ||
-      !req.body.listId
+      !req.body.listId ||
+      !req.body.name
     ) {
       return next(
         new ApiBadRequestError(
@@ -30,7 +30,8 @@ class CardController {
     givenParams = {
       content: req.body.content,
       idOwner: req.user.id,
-      listId: req.body.listId
+      listId: req.body.listId,
+      name: req.body.name
     };
     try {
       user = await CardCreateContext.call(givenParams);
@@ -65,18 +66,18 @@ class CardController {
     if (!req.user) {
       return next(new ApiForbiddenError('User not found'));
     }
-    if (
-      !req.body.content
-    ) {
-      return next(new ApiBadRequestError('Fields missing'));
-    }
+
     try {
       card = await CardManager.findById(req.params.idCard)
     } catch (err) {
       return next(new ApiNotFoundError('Resource not found'));
     }
-
-    card.content = req.body.content;
+    if (req.body.content)
+      card.content = req.body.content;
+    if (req.body.name)
+      card.name = req.body.name
+    if (req.body.listId)
+      card.listId = req.body.listId;
 
     try {
       await CardSaveContext.call(card);
@@ -85,7 +86,7 @@ class CardController {
     }
 
     return res.json({
-      data: [CardSerializer(card)],
+      data: CardSerializer(card),
       includes: []
     });
   }

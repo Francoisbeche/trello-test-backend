@@ -8,7 +8,8 @@ const cardSerializer = card => {
     type: 'card',
     id: card.id,
     content: card.content,
-    teamId: card.idList
+    name: card.name,
+    listId: card.listId
   };
 
   return data;

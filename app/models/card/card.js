@@ -8,6 +8,9 @@ const CardSchema = mongoose.Schema(
     },
     content: {
       type: String,
+    },
+    name: {
+      type: String,
       required: true,
     },
     idOwner: {

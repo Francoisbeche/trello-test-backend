@@ -64,7 +64,6 @@ class UserCreateSessionContext {
       }
 
     };
-    console.log("sessions", session)
     if (user.sessions instanceof Array) {
       user.sessions.push(session);
     } else {

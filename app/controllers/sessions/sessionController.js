@@ -11,7 +11,7 @@ class SessionController {
       return next(err);
     }
     return res.json({
-      data: [SessionSerializer({ user, session })],
+      data: SessionSerializer({ user, session }),
       includes: []
     });
   }

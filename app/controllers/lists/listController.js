@@ -84,7 +84,7 @@ class ListController {
     }
 
     return res.json({
-      data: [ListSerializer(list)],
+      data: ListSerializer(list),
       includes: []
     });
   }

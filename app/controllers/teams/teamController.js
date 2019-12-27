@@ -1,7 +1,9 @@
 import TeamSerializer from 'serializers/team/teamSerializer';
 import TeamCreateContext from 'contexts/team/TeamCreateContext';
-import TeamManager from 'modules/TeamManager';
+import TeamDeleteOneContext from 'contexts/team/TeamDeleteOneContext';
 
+import TeamManager from 'modules/TeamManager';
+import TeamSaveContext from 'contexts/team/TeamSaveContext';
 import {
   ApiForbiddenError,
   ApiBadRequestError,
@@ -23,7 +25,7 @@ class TeamController {
         )
       );
     }
-   
+
     givenParams = {
       teamName: req.body.teamName,
       idOwner: req.user.id
@@ -45,7 +47,6 @@ class TeamController {
       return next(new ApiForbiddenError('User not found'));
     }
     try {
-      console.log(req.user._id)
       teams = await TeamManager.findByOwner(req.user._id);
     } catch (err) {
       return next(new ApiNotFoundError('Teams not found'));
@@ -55,8 +56,64 @@ class TeamController {
       includes: []
     });
   }
-  
 
+  static async updateTeam(req, res, next) {
+    let team
+    if (!req.user) {
+      return next(new ApiForbiddenError('User not found'));
+    }
+    if (
+      !req.body.teamName
+    ) {
+      return next(
+        new ApiBadRequestError(
+          'Veuillez renseigner pour modifier une team'
+        )
+      );
+    }
+
+    try {
+      team = await TeamManager.findById(req.params.idTeam)
+    } catch (err) {
+      return next(new ApiNotFoundError('Resource not found'));
+    }
+    team.teamName = req.body.teamName;
+
+
+    try {
+      await TeamSaveContext.call(team);
+    } catch (err) {
+      return next(err);
+    }
+
+    return res.json({
+      data: TeamSerializer(team),
+      includes: []
+    });
+  }
+
+
+  static async delete(req, res, next) {
+    let team;
+
+    if (!req.user) {
+      return next(new ApiForbiddenError('User not found'));
+    }
+    if (!(team = await TeamManager.findById(req.params.idTeam))) {
+      return next(new ApiNotFoundError('Resource not found'));
+    }
+
+
+    try {
+      await TeamDeleteOneContext.call(team, { _id: team._id });
+    } catch (err) {
+      return next(err);
+    }
+    return res.json({
+      data: [],
+      includes: []
+    });
+  }
 
 }
 

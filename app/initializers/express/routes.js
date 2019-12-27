@@ -65,6 +65,22 @@ class Routes {
       )
 
     this.router
+      .route('/team/update/:idTeam')
+      .put(
+        ApiAuthentication.validJwt,
+        ApiAuthentication.retrieveUser,
+        TeamController.updateTeam
+      )
+    this.router
+      .route('/team/delete/:idTeam')
+      .delete(
+        ApiAuthentication.validJwt,
+        ApiAuthentication.retrieveUser,
+        TeamController.delete
+      )
+
+
+    this.router
       .route('/card')
       .post(
         ApiAuthentication.validJwt,
@@ -79,7 +95,7 @@ class Routes {
         CardController.updateCard
       )
 
-      this.router
+    this.router
       .route('/card/delete/:idCard')
       .delete(
         ApiAuthentication.validJwt,
