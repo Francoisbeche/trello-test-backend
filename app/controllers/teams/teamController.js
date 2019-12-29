@@ -1,9 +1,9 @@
 import TeamSerializer from 'serializers/team/teamSerializer';
-import TeamCreateContext from 'contexts/team/TeamCreateContext';
-import TeamDeleteOneContext from 'contexts/team/TeamDeleteOneContext';
+import TeamCreateContext from 'contexts/team/teamCreateContext';
+import TeamDeleteOneContext from 'contexts/team/teamDeleteOneContext';
 
-import TeamManager from 'modules/TeamManager';
-import TeamSaveContext from 'contexts/team/TeamSaveContext';
+import TeamManager from 'modules/teamManager';
+import TeamSaveContext from 'contexts/team/teamSaveContext';
 import {
   ApiForbiddenError,
   ApiBadRequestError,

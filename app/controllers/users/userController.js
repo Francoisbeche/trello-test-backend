@@ -1,6 +1,6 @@
 
 import validator from 'email-validator';
-import UserManager from 'modules/UserManager';
+import UserManager from 'modules/userManager';
 import UserCreateUserContext from 'contexts/user/userCreateUserContext';
 import UserSerializer from 'serializers/user/userSerializer';
 import UserCreateSessionContext from 'contexts/sessions/userCreateSessionContext';
